@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPT-3.5-turbo Test</title>
+</head>
+<body>
+    <h1>GPT-3.5-turbo Test</h1>
+    <form id="prompt-form">
+        <label for="prompt">Enter prompt:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        <button type="submit">Generate</button>
+    </form>
+    <div id="response-container"></div>
+    
+    <script>
+        document.getElementById("prompt-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var prompt = document.getElementById("prompt").value;
+            
+            // Make a request to your Django API endpoint to generate the response
+            fetch("/generate/?text=" + encodeURIComponent(prompt))
+                .then(response => response.json())
+                .then(data => {
+                    var responseContainer = document.getElementById("response-container");
+                    responseContainer.innerHTML = "<p><strong>Generated response:</strong></p><p>" + data.response + "</p>";
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</body>
+</html>
